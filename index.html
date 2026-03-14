@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RG2 Eat — Comida Mexicana · Porto</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<style>
+  :root {
+    --coral: #F38067;
+    --cream: #FEF2EC;
+    --black: #000000;
+    --coral-dark: #d9644d;
+    --coral-light: #f9c4b5;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'DM Sans', sans-serif; background: var(--cream); color: var(--black); overflow-x: hidden; }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1.2rem 4rem;
+    background: rgba(254,242,236,0.92); backdrop-filter: blur(12px);
+    border-bottom: 1.5px solid var(--coral-light); transition: box-shadow .3s;
+  }
+  nav.scrolled { box-shadow: 0 4px 30px rgba(243,128,103,.18); }
+  .nav-logo { display: flex; align-items: center; text-decoration: none; }
+  .nav-logo img { height: 42px; width: auto; display: block; }
+  .nav-links { display: flex; gap: 2rem; list-style: none; align-items: center; }
+  .nav-links a {
+    text-decoration: none; color: var(--black); font-size: .9rem; font-weight: 500;
+    letter-spacing: .04em; text-transform: uppercase; position: relative; transition: color .2s;
+  }
+  .nav-links a::after {
+    content: ''; position: absolute; left: 0; bottom: -3px; width: 0; height: 2px;
+    background: var(--coral); transition: width .25s;
+  }
+  .nav-links a:hover { color: var(--coral); }
+  .nav-links a:hover::after { width: 100%; }
+  .nav-reserve {
+    background: var(--coral); color: #fff !important; padding: .55rem 1.4rem;
+    border-radius: 2px; transition: background .2s !important;
+  }
+  .nav-reserve:hover { background: var(--coral-dark) !important; }
+  .nav-reserve::after { display: none !important; }
+
+  /* LANG SWITCHER */
+  .lang-switcher {
+    display: flex; align-items: center; gap: .3rem;
+    background: rgba(243,128,103,.1); border: 1.5px solid var(--coral-light);
+    border-radius: 3px; padding: .2rem .3rem;
+  }
+  .lang-btn {
+    background: none; border: none; cursor: pointer;
+    font-size: .75rem; font-weight: 600; font-family: 'DM Sans', sans-serif;
+    color: #888; padding: .28rem .48rem; border-radius: 2px;
+    text-transform: uppercase; letter-spacing: .06em; transition: background .15s, color .15s; line-height: 1;
+  }
+  .lang-btn:hover { color: var(--coral); }
+  .lang-btn.active { background: var(--coral); color: #fff; }
+  .lang-sep { color: var(--coral-light); font-size: .7rem; user-select: none; }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh; display: grid; grid-template-columns: 1fr 1fr;
+    align-items: center; padding: 8rem 4rem 4rem; gap: 4rem; position: relative; overflow: hidden;
+  }
+  .hero::before {
+    content: ''; position: absolute; right: -10%; top: -10%; width: 70%; height: 120%;
+    background: radial-gradient(ellipse at center, var(--coral-light) 0%, transparent 70%);
+    opacity: .5; pointer-events: none;
+  }
+  .hero-text { position: relative; z-index: 1; }
+  .hero-tag {
+    display: inline-block; font-size: .75rem; text-transform: uppercase; letter-spacing: .18em;
+    color: var(--coral); font-weight: 500; border: 1.5px solid var(--coral);
+    padding: .35rem .9rem; border-radius: 2px; margin-bottom: 1.8rem; animation: fadeUp .6s ease both;
+  }
+  .hero h1 {
+    font-family: 'Playfair Display', serif; font-size: clamp(3rem, 6vw, 5.5rem);
+    line-height: 1.05; font-weight: 900; color: var(--black); animation: fadeUp .7s .1s ease both;
+  }
+  .hero h1 em { font-style: italic; color: var(--coral); }
+  .hero-sub {
+    margin-top: 1.5rem; font-size: 1.1rem; font-weight: 300; line-height: 1.7;
+    max-width: 440px; color: #333; animation: fadeUp .7s .2s ease both;
+  }
+  .hero-ctas { display: flex; gap: 1rem; margin-top: 2.5rem; animation: fadeUp .7s .3s ease both; }
+  .btn-primary {
+    background: var(--coral); color: #fff; padding: .85rem 2rem; border: none; cursor: pointer;
+    font-family: 'DM Sans', sans-serif; font-size: .9rem; font-weight: 500;
+    text-transform: uppercase; letter-spacing: .08em; text-decoration: none; display: inline-block;
+    border-radius: 2px; transition: background .2s, transform .15s;
+  }
+  .btn-primary:hover { background: var(--coral-dark); transform: translateY(-2px); }
+  .btn-outline {
+    background: transparent; color: var(--black); padding: .85rem 2rem;
+    border: 1.5px solid var(--black); cursor: pointer; font-family: 'DM Sans', sans-serif;
+    font-size: .9rem; font-weight: 500; text-transform: uppercase; letter-spacing: .08em;
+    text-decoration: none; display: inline-block; border-radius: 2px;
+    transition: background .2s, color .2s, transform .15s;
+  }
+  .btn-outline:hover { background: var(--black); color: var(--cream); transform: translateY(-2px); }
+  .hero-visual {
+    position: relative; display: flex; justify-content: center;
+    align-items: center; animation: fadeUp .8s .25s ease both;
+  }
+  .hero-plate {
+    width: min(420px, 90%); aspect-ratio: 1; border-radius: 50%; background: var(--coral);
+    display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden;
+  }
+  .hero-plate::before {
+    content: ''; position: absolute; inset: 0;
+    background: repeating-conic-gradient(from 0deg, rgba(255,255,255,.06) 0deg 30deg, transparent 30deg 60deg);
+  }
+  .hero-plate-inner {
+    font-size: 9rem; filter: drop-shadow(0 8px 24px rgba(0,0,0,.15));
+    animation: spin-slow 20s linear infinite; user-select: none;
+  }
+  .hero-badge {
+    position: absolute; top: 1.5rem; right: -1rem; background: var(--black); color: var(--cream);
+    padding: .9rem 1.1rem; border-radius: 2px; text-align: center;
+    font-size: .7rem; text-transform: uppercase; letter-spacing: .1em; font-weight: 500; line-height: 1.5;
+  }
+  .hero-badge strong { display: block; font-size: 1.5rem; font-family: 'Playfair Display', serif; font-weight: 900; }
+
+  /* SECTIONS */
+  section { padding: 6rem 4rem; }
+  .section-label { font-size: .72rem; text-transform: uppercase; letter-spacing: .2em; color: var(--coral); font-weight: 500; margin-bottom: .8rem; }
+  .section-title { font-family: 'Playfair Display', serif; font-size: clamp(2rem, 4vw, 3.2rem); font-weight: 900; line-height: 1.1; margin-bottom: 1rem; }
+
+  /* MENU */
+  #menu { background: var(--black); color: var(--cream); }
+  #menu .section-label { color: var(--coral); }
+  #menu .section-title { color: var(--cream); }
+  #menu .section-intro { color: #aaa; font-size: 1rem; max-width: 500px; margin-bottom: 3.5rem; font-weight: 300; }
+  .menu-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; max-width: 900px; }
+  .menu-card {
+    background: #111; border: 1.5px solid #222; border-radius: 4px; padding: 2.5rem;
+    display: flex; flex-direction: column; align-items: center; text-align: center;
+    transition: border-color .25s, transform .2s;
+  }
+  .menu-card:hover { border-color: var(--coral); transform: translateY(-4px); }
+  .menu-card-icon { font-size: 2.5rem; margin-bottom: 1rem; }
+  .menu-card h3 { font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 700; color: var(--coral); margin-bottom: .5rem; }
+  .menu-card p { font-size: .85rem; color: #888; font-weight: 300; margin-bottom: 1.8rem; line-height: 1.6; }
+  .qr-box { background: #fff; padding: 1rem; border-radius: 4px; display: flex; flex-direction: column; align-items: center; gap: .6rem; }
+  .qr-label { font-size: .65rem; text-transform: uppercase; letter-spacing: .12em; color: #555; font-weight: 500; }
+  .menu-pdf-link {
+    display: inline-block; margin-top: 1rem; font-size: .78rem; color: var(--coral);
+    text-decoration: none; text-transform: uppercase; letter-spacing: .1em; font-weight: 500;
+    border-bottom: 1px solid transparent; transition: border-color .2s;
+  }
+  .menu-pdf-link:hover { border-color: var(--coral); }
+
+  /* ABOUT */
+  #about { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: center; }
+  .about-visual { position: relative; }
+  .about-block {
+    background: var(--coral); aspect-ratio: 3/4; border-radius: 4px;
+    display: flex; align-items: center; justify-content: center; font-size: 7rem;
+    position: relative; overflow: hidden;
+  }
+  .about-block::before {
+    content: ''; position: absolute; inset: 0;
+    background: repeating-linear-gradient(45deg, transparent, transparent 20px, rgba(255,255,255,.06) 20px, rgba(255,255,255,.06) 21px);
+  }
+  .about-float {
+    position: absolute; bottom: -1.5rem; right: -1.5rem; background: var(--black); color: var(--cream);
+    padding: 1.5rem 2rem; border-radius: 4px; font-family: 'Playfair Display', serif;
+    font-size: 2.5rem; font-weight: 900; line-height: 1;
+  }
+  .about-float span { display: block; font-family: 'DM Sans', sans-serif; font-size: .7rem; font-weight: 400; text-transform: uppercase; letter-spacing: .12em; margin-top: .3rem; color: var(--coral); }
+  .about-text p { font-size: 1rem; font-weight: 300; line-height: 1.8; color: #333; margin-bottom: 1rem; }
+  .about-features { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 2rem; }
+  .about-feat { display: flex; align-items: flex-start; gap: .6rem; }
+  .feat-icon { font-size: 1.4rem; flex-shrink: 0; }
+  .feat-text strong { display: block; font-size: .82rem; text-transform: uppercase; letter-spacing: .06em; font-weight: 500; }
+  .feat-text span { font-size: .78rem; color: #666; font-weight: 300; }
+
+  /* SOCIAL */
+  #social { background: var(--coral); color: var(--cream); text-align: center; }
+  #social .section-label { color: rgba(255,255,255,.7); }
+  #social .section-title { color: #fff; }
+  #social .section-sub { font-size: 1rem; font-weight: 300; color: rgba(255,255,255,.8); margin-bottom: 3rem; }
+  .social-grid { display: flex; gap: 2rem; justify-content: center; flex-wrap: wrap; }
+  .social-card {
+    background: rgba(255,255,255,.12); border: 1.5px solid rgba(255,255,255,.25); border-radius: 4px;
+    padding: 2.5rem 3rem; text-decoration: none; color: #fff;
+    display: flex; flex-direction: column; align-items: center; gap: 1rem; min-width: 200px;
+    transition: background .25s, transform .2s;
+  }
+  .social-card:hover { background: rgba(255,255,255,.25); transform: translateY(-5px); }
+  .social-icon { width: 56px; height: 56px; border-radius: 14px; display: flex; align-items: center; justify-content: center; font-size: 1.6rem; }
+  .social-icon.ig { background: linear-gradient(135deg, #f09433 0%,#e6683c 25%,#dc2743 50%,#cc2366 75%,#bc1888 100%); }
+  .social-icon.tt { background: #000; }
+  .social-card h4 { font-family: 'Playfair Display', serif; font-size: 1.2rem; font-weight: 700; }
+  .social-card span { font-size: .8rem; font-weight: 300; opacity: .75; }
+
+  /* LOCATION */
+  #location { background: var(--cream); display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: start; }
+  .location-detail { display: flex; align-items: flex-start; gap: 1rem; margin-bottom: 1.5rem; padding-bottom: 1.5rem; border-bottom: 1px solid var(--coral-light); }
+  .location-detail:last-child { border-bottom: none; }
+  .loc-icon { width: 40px; height: 40px; background: var(--coral); border-radius: 2px; display: flex; align-items: center; justify-content: center; font-size: 1.1rem; flex-shrink: 0; }
+  .loc-text strong { display: block; font-size: .78rem; text-transform: uppercase; letter-spacing: .1em; font-weight: 500; margin-bottom: .2rem; }
+  .loc-text p { font-size: .92rem; color: #444; font-weight: 300; line-height: 1.5; }
+  .loc-text a { color: var(--coral); text-decoration: none; font-weight: 500; }
+  .loc-text a:hover { text-decoration: underline; }
+  .map-embed { border-radius: 4px; overflow: hidden; border: 2px solid var(--coral-light); box-shadow: 0 12px 40px rgba(243,128,103,.15); position: sticky; top: 5rem; }
+  .map-embed iframe { width: 100%; height: 420px; border: none; display: block; }
+  .map-cta { display: block; background: var(--coral); color: #fff; text-align: center; padding: 1rem; text-decoration: none; font-size: .85rem; text-transform: uppercase; letter-spacing: .1em; font-weight: 500; transition: background .2s; }
+  .map-cta:hover { background: var(--coral-dark); }
+
+  /* FOOTER */
+  footer { background: var(--black); color: #555; text-align: center; padding: 2.5rem 4rem; font-size: .8rem; font-weight: 300; }
+  footer a { color: var(--coral); text-decoration: none; }
+  footer strong { color: var(--cream); }
+
+  /* DECORATIVE */
+  .divider { width: 60px; height: 3px; background: var(--coral); margin: 1.2rem 0 2rem; }
+  .divider.center { margin: 1.2rem auto 2rem; }
+
+  /* ANIMATIONS */
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(28px); } to { opacity: 1; transform: translateY(0); } }
+  @keyframes spin-slow { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+
+  /* RESPONSIVE */
+  @media (max-width: 900px) {
+    nav { padding: 1rem 1.5rem; }
+    .nav-links { gap: 1rem; }
+    .hero { grid-template-columns: 1fr; padding: 7rem 1.5rem 3rem; gap: 2.5rem; }
+    .hero::before { display: none; }
+    section { padding: 4rem 1.5rem; }
+    .menu-grid { grid-template-columns: 1fr; max-width: 420px; }
+    #about { grid-template-columns: 1fr; gap: 3rem; }
+    #location { grid-template-columns: 1fr; gap: 3rem; }
+    .map-embed { position: static; }
+  }
+  @media (max-width: 640px) {
+    .nav-links li.hide-mobile { display: none; }
+    .hero h1 { font-size: 2.8rem; }
+    .about-features { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="navbar">
+  <a href="#home" class="nav-logo">
+    <img src="https://www.rg2eat.com/assets/images/rg2-logo.svg" alt="RG2 Eat">
+  </a>
+  <ul class="nav-links">
+    <li class="hide-mobile"><a href="#menu"     data-i18n="nav_menu"></a></li>
+    <li class="hide-mobile"><a href="#about"    data-i18n="nav_about"></a></li>
+    <li class="hide-mobile"><a href="#social"   data-i18n="nav_social"></a></li>
+    <li class="hide-mobile"><a href="#location" data-i18n="nav_location"></a></li>
+    <li><a href="https://www.instagram.com/rg2eat/" target="_blank" class="nav-reserve" data-i18n="nav_reserve"></a></li>
+    <li>
+      <div class="lang-switcher">
+        <button class="lang-btn" data-lang="es">ES</button>
+        <span class="lang-sep">|</span>
+        <button class="lang-btn" data-lang="en">EN</button>
+        <span class="lang-sep">|</span>
+        <button class="lang-btn" data-lang="pt">PT</button>
+      </div>
+    </li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="hero-text">
+    <div class="hero-tag" data-i18n="hero_tag"></div>
+    <h1 data-i18n-html="hero_h1"></h1>
+    <p class="hero-sub" data-i18n="hero_sub"></p>
+    <div class="hero-ctas">
+      <a href="#menu"     class="btn-primary" data-i18n="hero_cta1"></a>
+      <a href="#location" class="btn-outline"  data-i18n="hero_cta2"></a>
+    </div>
+  </div>
+  <div class="hero-visual">
+    <div class="hero-plate"><div class="hero-plate-inner">🌮</div></div>
+    <div class="hero-badge">
+      <span data-i18n="hero_badge_line1"></span><br>
+      <strong data-i18n="hero_badge_line2"></strong>
+      <span data-i18n="hero_badge_line3"></span>
+    </div>
+  </div>
+</section>
+
+<!-- MENU -->
+<section id="menu">
+  <p class="section-label" data-i18n="menu_label"></p>
+  <h2 class="section-title" data-i18n="menu_title"></h2>
+  <div class="divider"></div>
+  <p class="section-intro" data-i18n="menu_intro"></p>
+  <div class="menu-grid">
+    <div class="menu-card">
+      <div class="menu-card-icon">☀️</div>
+      <h3>Lunch Menu</h3>
+      <p data-i18n="menu_lunch_desc"></p>
+      <div class="qr-box">
+        <div id="qr-lunch"></div>
+        <p class="qr-label" data-i18n="menu_qr_label"></p>
+      </div>
+      <a class="menu-pdf-link" href="https://www.rg2eat.com/assets/menu/rg2-menu-lunch-15-08-25.pdf" target="_blank" data-i18n="menu_pdf_link"></a>
+    </div>
+    <div class="menu-card">
+      <div class="menu-card-icon">🌙</div>
+      <h3>Dinner Menu</h3>
+      <p data-i18n="menu_dinner_desc"></p>
+      <div class="qr-box">
+        <div id="qr-dinner"></div>
+        <p class="qr-label" data-i18n="menu_qr_label"></p>
+      </div>
+      <a class="menu-pdf-link" href="https://www.rg2eat.com/assets/menu/rg2-menu-dinner-15-08-25.pdf" target="_blank" data-i18n="menu_pdf_link"></a>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="about-visual">
+    <div class="about-block">🇲🇽
+      <div style="position:absolute;bottom:1.5rem;left:1.5rem;color:rgba(255,255,255,.18);font-family:'Playfair Display',serif;font-size:6rem;font-weight:900;line-height:1;user-select:none;">RG2</div>
+    </div>
+    <div class="about-float">Porto<span>📍 Portugal</span></div>
+  </div>
+  <div class="about-text">
+    <p class="section-label" data-i18n="about_label"></p>
+    <h2 class="section-title" data-i18n-html="about_title"></h2>
+    <div class="divider"></div>
+    <p data-i18n="about_p1"></p>
+    <p data-i18n="about_p2"></p>
+    <div class="about-features">
+      <div class="about-feat"><div class="feat-icon">🌽</div><div class="feat-text"><strong data-i18n="feat1_title"></strong><span data-i18n="feat1_sub"></span></div></div>
+      <div class="about-feat"><div class="feat-icon">🔥</div><div class="feat-text"><strong data-i18n="feat2_title"></strong><span data-i18n="feat2_sub"></span></div></div>
+      <div class="about-feat"><div class="feat-icon">🍹</div><div class="feat-text"><strong data-i18n="feat3_title"></strong><span data-i18n="feat3_sub"></span></div></div>
+      <div class="about-feat"><div class="feat-icon">❤️</div><div class="feat-text"><strong data-i18n="feat4_title"></strong><span data-i18n="feat4_sub"></span></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- SOCIAL -->
+<section id="social">
+  <p class="section-label" data-i18n="social_label"></p>
+  <h2 class="section-title" data-i18n="social_title"></h2>
+  <div class="divider center"></div>
+  <p class="section-sub" data-i18n="social_sub"></p>
+  <div class="social-grid">
+    <a href="https://www.instagram.com/rg2eat/" target="_blank" class="social-card">
+      <div class="social-icon ig">📸</div><h4>Instagram</h4><span>@rg2eat</span>
+    </a>
+    <a href="https://www.tiktok.com/@rg2eat" target="_blank" class="social-card">
+      <div class="social-icon tt">🎵</div><h4>TikTok</h4><span>@rg2eat</span>
+    </a>
+  </div>
+</section>
+
+<!-- LOCATION -->
+<section id="location">
+  <div class="location-info">
+    <p class="section-label" data-i18n="loc_label"></p>
+    <h2 class="section-title" data-i18n-html="loc_title"></h2>
+    <div class="divider"></div>
+    <div class="location-detail">
+      <div class="loc-icon">📍</div>
+      <div class="loc-text"><strong data-i18n="loc_address_title"></strong><p>Porto, Portugal</p></div>
+    </div>
+    <div class="location-detail">
+      <div class="loc-icon">🕐</div>
+      <div class="loc-text"><strong data-i18n="loc_hours_title"></strong><p data-i18n-html="loc_hours_val"></p></div>
+    </div>
+    <div class="location-detail">
+      <div class="loc-icon">📲</div>
+      <div class="loc-text">
+        <strong data-i18n="loc_social_title"></strong>
+        <p>
+          <a href="https://www.instagram.com/rg2eat/" target="_blank">Instagram: @rg2eat</a><br>
+          <a href="https://www.tiktok.com/@rg2eat" target="_blank">TikTok: @rg2eat</a>
+        </p>
+      </div>
+    </div>
+    <div class="location-detail">
+      <div class="loc-icon">🗺️</div>
+      <div class="loc-text">
+        <strong>Google Maps</strong>
+        <p><a href="https://maps.app.goo.gl/edWbTTESr36zEu956" target="_blank" data-i18n="loc_maps_link"></a></p>
+      </div>
+    </div>
+  </div>
+  <div class="map-embed">
+    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d12072.!2d-8.61099!3d41.14961!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd246533ba3c13d1%3A0x55e32f97e33e3c69!2sPorto%2C%20Portugal!5e0!3m2!1ses!2spt!4v1710000000000"
+      allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="RG2 Eat - Porto"></iframe>
+    <a href="https://maps.app.goo.gl/edWbTTESr36zEu956" target="_blank" class="map-cta" data-i18n="loc_maps_cta"></a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p><strong>RG2 Eat</strong> — <span data-i18n="footer_tagline"></span> · Porto, Portugal</p>
+  <p style="margin-top:.5rem;">
+    <a href="https://www.instagram.com/rg2eat/" target="_blank">Instagram</a> ·
+    <a href="https://www.tiktok.com/@rg2eat" target="_blank">TikTok</a> ·
+    <a href="https://maps.app.goo.gl/edWbTTESr36zEu956" target="_blank" data-i18n="footer_map"></a>
+  </p>
+  <p style="margin-top:.8rem;font-size:.72rem;" data-i18n="footer_copy"></p>
+</footer>
+
+<script>
+// ─────────────────────────────────────────
+//  TRANSLATIONS
+// ─────────────────────────────────────────
+const T = {
+  es: {
+    page_title:"RG2 Eat — Comida Mexicana · Porto",
+    nav_menu:"Menú", nav_about:"Nosotros", nav_social:"Redes", nav_location:"Ubicación", nav_reserve:"Reservar",
+    hero_tag:"🌮 Comida Mexicana · Porto",
+    hero_h1:"Sabor<br><em>auténtico</em><br>mexicano.",
+    hero_sub:"Bienvenidos a RG2 Eat, donde los sabores de México cobran vida en el corazón de Porto. Ingredientes frescos, recetas tradicionales y mucho sabor.",
+    hero_cta1:"Ver menú", hero_cta2:"Encuéntranos",
+    hero_badge_line1:"Abierto", hero_badge_line2:"Hoy", hero_badge_line3:"en Porto",
+    menu_label:"Lo que tenemos para ti", menu_title:"Nuestro menú",
+    menu_intro:"Escanea el código QR o haz clic para ver el menú completo en PDF.",
+    menu_lunch_desc:"Del mediodía a la tarde — platos ligeros y sabrosos para recargar energías.",
+    menu_dinner_desc:"La cena perfecta — platos especiales y cócteles para terminar el día con estilo.",
+    menu_qr_label:"Escanear para ver menú", menu_pdf_link:"↗ Abrir PDF",
+    about_label:"Nuestra historia", about_title:"Tradición<br>en cada bocado",
+    about_p1:"En RG2 Eat llevamos la esencia de la cocina mexicana a las calles de Porto. Cada plato es una celebración de los sabores auténticos — desde las especias vibrantes hasta los ingredientes más frescos seleccionados a diario.",
+    about_p2:"Somos un local acogedor donde la comida, la música y la hospitalidad se unen para crear una experiencia única e inolvidable.",
+    feat1_title:"Ingredientes frescos", feat1_sub:"Seleccionados cada día",
+    feat2_title:"Recetas auténticas",   feat2_sub:"Tradición mexicana",
+    feat3_title:"Bebidas especiales",   feat3_sub:"Cócteles y más",
+    feat4_title:"Hecho con amor",       feat4_sub:"Desde el corazón",
+    social_label:"Síguenos", social_title:"Únete a nuestra comunidad",
+    social_sub:"Comparte tus momentos con nosotros y mantente al día de las novedades.",
+    loc_label:"Dónde encontrarnos", loc_title:"Estamos en<br>Porto 📍",
+    loc_address_title:"Dirección", loc_hours_title:"Horario",
+    loc_hours_val:"Lunch: 12:00 – 15:00<br>Dinner: 18:00 – 23:00",
+    loc_social_title:"Redes sociales", loc_maps_link:"Ver en Google Maps →", loc_maps_cta:"📍 Abrir en Google Maps",
+    footer_tagline:"Comida Mexicana Auténtica", footer_map:"Mapa", footer_copy:"© 2025 RG2 Eat. Todos los derechos reservados."
+  },
+  en: {
+    page_title:"RG2 Eat — Mexican Food · Porto",
+    nav_menu:"Menu", nav_about:"About", nav_social:"Social", nav_location:"Location", nav_reserve:"Book Now",
+    hero_tag:"🌮 Mexican Food · Porto",
+    hero_h1:"Authentic<br><em>Mexican</em><br>flavour.",
+    hero_sub:"Welcome to RG2 Eat, where the flavours of Mexico come alive in the heart of Porto. Fresh ingredients, traditional recipes and plenty of taste.",
+    hero_cta1:"View menu", hero_cta2:"Find us",
+    hero_badge_line1:"Open", hero_badge_line2:"Today", hero_badge_line3:"in Porto",
+    menu_label:"What we have for you", menu_title:"Our menu",
+    menu_intro:"Scan the QR code or click to view the full menu as a PDF.",
+    menu_lunch_desc:"From midday to afternoon — light and flavourful dishes to recharge your energy.",
+    menu_dinner_desc:"The perfect dinner — special plates and cocktails to end the day in style.",
+    menu_qr_label:"Scan to view menu", menu_pdf_link:"↗ Open PDF",
+    about_label:"Our story", about_title:"Tradition in<br>every bite",
+    about_p1:"At RG2 Eat we bring the essence of Mexican cuisine to the streets of Porto. Every dish is a celebration of authentic flavours — from vibrant spices to the freshest ingredients selected daily.",
+    about_p2:"We are a welcoming spot where food, music and hospitality come together to create a unique and unforgettable experience.",
+    feat1_title:"Fresh ingredients", feat1_sub:"Chosen every day",
+    feat2_title:"Authentic recipes",  feat2_sub:"Mexican tradition",
+    feat3_title:"Special drinks",     feat3_sub:"Cocktails & more",
+    feat4_title:"Made with love",     feat4_sub:"From the heart",
+    social_label:"Follow us", social_title:"Join our community",
+    social_sub:"Share your moments with us and stay up to date with the latest news.",
+    loc_label:"Where to find us", loc_title:"We are in<br>Porto 📍",
+    loc_address_title:"Address", loc_hours_title:"Opening hours",
+    loc_hours_val:"Lunch: 12:00 – 15:00<br>Dinner: 18:00 – 23:00",
+    loc_social_title:"Social media", loc_maps_link:"View on Google Maps →", loc_maps_cta:"📍 Open in Google Maps",
+    footer_tagline:"Authentic Mexican Food", footer_map:"Map", footer_copy:"© 2025 RG2 Eat. All rights reserved."
+  },
+  pt: {
+    page_title:"RG2 Eat — Comida Mexicana · Porto",
+    nav_menu:"Menu", nav_about:"Sobre nós", nav_social:"Redes", nav_location:"Localização", nav_reserve:"Reservar",
+    hero_tag:"🌮 Comida Mexicana · Porto",
+    hero_h1:"Sabor<br><em>autêntico</em><br>mexicano.",
+    hero_sub:"Bem-vindos ao RG2 Eat, onde os sabores do México ganham vida no coração do Porto. Ingredientes frescos, receitas tradicionais e muito sabor.",
+    hero_cta1:"Ver menu", hero_cta2:"Encontra-nos",
+    hero_badge_line1:"Aberto", hero_badge_line2:"Hoje", hero_badge_line3:"no Porto",
+    menu_label:"O que temos para ti", menu_title:"O nosso menu",
+    menu_intro:"Digitaliza o código QR ou clica para ver o menu completo em PDF.",
+    menu_lunch_desc:"Do meio-dia à tarde — pratos leves e saborosos para recuperar energias.",
+    menu_dinner_desc:"O jantar perfeito — pratos especiais e cocktails para terminar o dia com estilo.",
+    menu_qr_label:"Digitalizar para ver menu", menu_pdf_link:"↗ Abrir PDF",
+    about_label:"A nossa história", about_title:"Tradição em<br>cada garfada",
+    about_p1:"No RG2 Eat trazemos a essência da cozinha mexicana para as ruas do Porto. Cada prato é uma celebração dos sabores autênticos — das especiarias vibrantes aos ingredientes mais frescos selecionados diariamente.",
+    about_p2:"Somos um espaço acolhedor onde a comida, a música e a hospitalidade se unem para criar uma experiência única e inesquecível.",
+    feat1_title:"Ingredientes frescos",      feat1_sub:"Selecionados todos os dias",
+    feat2_title:"Receitas autênticas",       feat2_sub:"Tradição mexicana",
+    feat3_title:"Bebidas especiais",         feat3_sub:"Cocktails e mais",
+    feat4_title:"Feito com amor",            feat4_sub:"Do fundo do coração",
+    social_label:"Segue-nos", social_title:"Junta-te à nossa comunidade",
+    social_sub:"Partilha os teus momentos connosco e mantém-te a par das novidades.",
+    loc_label:"Onde nos encontrar", loc_title:"Estamos no<br>Porto 📍",
+    loc_address_title:"Morada", loc_hours_title:"Horário",
+    loc_hours_val:"Almoço: 12:00 – 15:00<br>Jantar: 18:00 – 23:00",
+    loc_social_title:"Redes sociais", loc_maps_link:"Ver no Google Maps →", loc_maps_cta:"📍 Abrir no Google Maps",
+    footer_tagline:"Comida Mexicana Autêntica", footer_map:"Mapa", footer_copy:"© 2025 RG2 Eat. Todos os direitos reservados."
+  }
+};
+
+// ─────────────────────────────────────────
+//  DETECT LANGUAGE
+//  1. URL path  /en/ /es/ /pt/
+//  2. ?lang= querystring
+//  3. Browser language
+//  4. Default 'es'
+// ─────────────────────────────────────────
+function detectLang() {
+  const supported = ['en','es','pt'];
+  const pathMatch = window.location.pathname.match(/\/(en|es|pt)(\/|$)/i);
+  if (pathMatch && supported.includes(pathMatch[1].toLowerCase())) return pathMatch[1].toLowerCase();
+  const qs = new URLSearchParams(window.location.search).get('lang');
+  if (qs && supported.includes(qs.toLowerCase())) return qs.toLowerCase();
+  const browser = (navigator.language || '').slice(0,2).toLowerCase();
+  if (supported.includes(browser)) return browser;
+  return 'es';
+}
+
+// ─────────────────────────────────────────
+//  APPLY LANGUAGE
+// ─────────────────────────────────────────
+let currentLang = detectLang();
+
+function applyLang(lang) {
+  currentLang = lang;
+  const t = T[lang];
+  if (!t) return;
+  document.documentElement.lang = lang;
+  document.title = t.page_title;
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const v = t[el.dataset.i18n];
+    if (v !== undefined) el.textContent = v;
+  });
+  document.querySelectorAll('[data-i18n-html]').forEach(el => {
+    const v = t[el.dataset.i18nHtml];
+    if (v !== undefined) el.innerHTML = v;
+  });
+  document.querySelectorAll('.lang-btn').forEach(btn => {
+    btn.classList.toggle('active', btn.dataset.lang === lang);
+  });
+  // Update URL without reload
+  const url = new URL(window.location.href);
+  url.searchParams.set('lang', lang);
+  history.replaceState({}, '', url.toString());
+}
+
+// ─────────────────────────────────────────
+//  LANG BUTTON EVENTS
+// ─────────────────────────────────────────
+document.querySelectorAll('.lang-btn').forEach(btn => {
+  btn.addEventListener('click', () => applyLang(btn.dataset.lang));
+});
+
+// ─────────────────────────────────────────
+//  NAV SCROLL
+// ─────────────────────────────────────────
+const navbar = document.getElementById('navbar');
+window.addEventListener('scroll', () => navbar.classList.toggle('scrolled', window.scrollY > 40));
+
+// ─────────────────────────────────────────
+//  QR + INIT
+// ─────────────────────────────────────────
+window.addEventListener('load', () => {
+  applyLang(currentLang);
+  new QRCode(document.getElementById('qr-lunch'),  { text:'https://www.rg2eat.com/assets/menu/rg2-menu-lunch-15-08-25.pdf',  width:140, height:140, colorDark:'#000', colorLight:'#fff', correctLevel:QRCode.CorrectLevel.H });
+  new QRCode(document.getElementById('qr-dinner'), { text:'https://www.rg2eat.com/assets/menu/rg2-menu-dinner-15-08-25.pdf', width:140, height:140, colorDark:'#000', colorLight:'#fff', correctLevel:QRCode.CorrectLevel.H });
+});
+
+// ─────────────────────────────────────────
+//  SCROLL ANIMATIONS
+// ─────────────────────────────────────────
+const obs = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.style.opacity='1'; e.target.style.transform='translateY(0)'; } });
+}, { threshold: 0.12 });
+document.querySelectorAll('.menu-card,.about-visual,.about-text,.social-card,.location-info,.map-embed').forEach(el => {
+  el.style.opacity = '0'; el.style.transform = 'translateY(30px)'; el.style.transition = 'opacity .6s ease, transform .6s ease';
+  obs.observe(el);
+});
+</script>
+</body>
+</html>
