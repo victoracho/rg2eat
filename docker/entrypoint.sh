@@ -70,5 +70,5 @@ php artisan view:cache
 chown -R www-data:www-data storage bootstrap/cache
 chmod -R ug+rwX storage bootstrap/cache
 
-log "Boot completo. Lanzando supervisord."
+log "Boot completo. Lanzando Apache."
 exec "$@"
