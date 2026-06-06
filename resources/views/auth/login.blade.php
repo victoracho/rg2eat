@@ -6,10 +6,10 @@
 <title>Login · RG2 Eat CMS</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@900&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
 <style>
-  :root { --coral:#F38067; --cream:#FEF2EC; --coral-dark:#d9644d; --coral-light:#f9c4b5; }
+  :root { --coral:#FF8C5A; --cream:#FEF4EC; --coral-dark:#E66B3A; --coral-light:#FFB89A; --coral-pale:#FFF0E8; }
   * { margin:0; padding:0; box-sizing:border-box; }
   body { font-family:'DM Sans',sans-serif; background:var(--cream); min-height:100vh; display:flex; align-items:center; justify-content:center; padding:1.5rem; }
-  .card { background:#fff; border:1.5px solid var(--coral-light); border-radius:8px; padding:2.5rem; width:100%; max-width:380px; box-shadow:0 18px 50px rgba(243,128,103,.18); }
+  .card { background:#fff; border:1.5px solid var(--coral-light); border-radius:8px; padding:2.5rem; width:100%; max-width:380px; box-shadow:0 18px 50px rgba(255,140,90,.18); }
   .card h1 { font-family:'Playfair Display',serif; font-size:1.8rem; margin-bottom:.4rem; }
   .card .sub { color:#666; font-size:.9rem; margin-bottom:2rem; }
   label { display:block; font-size:.72rem; text-transform:uppercase; letter-spacing:.1em; font-weight:500; color:#333; margin-bottom:.4rem; }

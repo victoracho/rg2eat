@@ -41,7 +41,7 @@
   .item .desc { color:#555; font-size:.88rem; line-height:1.5; margin-top:.25rem; font-weight:300; }
   .item .tags { display:flex; gap:.4rem; margin-top:.6rem; flex-wrap:wrap; }
   .item .tag {
-    background:rgba(243,128,103,.15); color:var(--coral-dark);
+    background:rgba(255,140,90,.15); color:var(--coral-dark);
     font-size:.65rem; text-transform:uppercase; letter-spacing:.08em;
     padding:.18rem .5rem; border-radius:2px; font-weight:500;
   }

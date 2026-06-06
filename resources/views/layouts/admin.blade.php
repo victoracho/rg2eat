@@ -6,7 +6,7 @@
 <title>@yield('title', 'Admin') · RG2 Eat CMS</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
-  :root { --coral:#F38067; --cream:#FEF2EC; --black:#000; --coral-dark:#d9644d; --coral-light:#f9c4b5; --bg:#f7f5f3; --border:#e3dfdb; }
+  :root { --coral:#FF8C5A; --cream:#FEF4EC; --black:#000; --coral-dark:#E66B3A; --coral-light:#FFB89A; --coral-pale:#FFF0E8; --bg:#FAF6F2; --border:#E8DFD5; }
   * { margin:0; padding:0; box-sizing:border-box; }
   body { font-family:'DM Sans',sans-serif; background:var(--bg); color:#222; }
   a { color:var(--coral); text-decoration:none; }
@@ -22,7 +22,7 @@
     display:block; color:#cbc4be; padding:.6rem .8rem; border-radius:3px; font-size:.92rem;
     margin-bottom:.15rem; transition:background .15s, color .15s;
   }
-  aside nav a:hover, aside nav a.active { background:rgba(243,128,103,.15); color:#fff; }
+  aside nav a:hover, aside nav a.active { background:rgba(255,140,90,.15); color:#fff; }
   aside .spacer { flex:1; }
   aside .who { font-size:.78rem; color:#857d75; padding:.5rem .8rem 0; border-top:1px solid #2a2520; }
   aside form { padding:.4rem .8rem 0; }
@@ -66,7 +66,7 @@
   .badge { display:inline-block; padding:.18rem .55rem; font-size:.7rem; border-radius:2px; font-weight:500; text-transform:uppercase; letter-spacing:.06em; }
   .badge.on  { background:#dff5e6; color:#1c5d34; }
   .badge.off { background:#f0e0dc; color:#7a1f1f; }
-  .badge.tag { background:rgba(243,128,103,.15); color:var(--coral-dark); }
+  .badge.tag { background:rgba(255,140,90,.15); color:var(--coral-dark); }
 
   label { display:block; font-size:.72rem; text-transform:uppercase; letter-spacing:.1em; font-weight:500; color:#333; margin-bottom:.35rem; }
   input[type=text], input[type=email], input[type=password], input[type=url], input[type=number], input[type=time], select, textarea {

@@ -105,10 +105,10 @@
   .loc-text p { font-size:.92rem; color:#444; font-weight:300; line-height:1.5; }
   .loc-text a { color:var(--coral); text-decoration:none; font-weight:500; }
   .hours-table { width:100%; font-size:.85rem; color:#444; }
-  .hours-table tr.today { background:rgba(243,128,103,.12); font-weight:500; }
+  .hours-table tr.today { background:rgba(255,140,90,.12); font-weight:500; }
   .hours-table td { padding:.35rem .5rem; vertical-align:top; }
   .hours-table td.day { font-weight:500; }
-  .map-embed { border-radius:4px; overflow:hidden; border:2px solid var(--coral-light); box-shadow:0 12px 40px rgba(243,128,103,.15); position:sticky; top:5rem; }
+  .map-embed { border-radius:4px; overflow:hidden; border:2px solid var(--coral-light); box-shadow:0 12px 40px rgba(255,140,90,.15); position:sticky; top:5rem; }
   .map-embed iframe { width:100%; height:420px; border:none; display:block; }
   .map-cta { display:block; background:var(--coral); color:#fff; text-align:center; padding:1rem; text-decoration:none; font-size:.85rem; text-transform:uppercase; letter-spacing:.1em; font-weight:500; transition:background .2s; }
   .map-cta:hover { background:var(--coral-dark); }

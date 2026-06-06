@@ -8,8 +8,8 @@
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
   :root {
-    --coral: #F38067; --cream: #FEF2EC; --black: #000;
-    --coral-dark: #d9644d; --coral-light: #f9c4b5;
+    --coral: #FF8C5A; --cream: #FEF4EC; --black: #000;
+    --coral-dark: #E66B3A; --coral-light: #FFB89A; --coral-pale: #FFF0E8;
   }
   * { margin:0; padding:0; box-sizing:border-box; }
   html { scroll-behavior:smooth; }
@@ -20,10 +20,10 @@
   nav.site-nav {
     position:fixed; top:0; left:0; right:0; z-index:100;
     display:flex; align-items:center; justify-content:space-between;
-    padding:1.2rem 4rem; background:rgba(254,242,236,.92); backdrop-filter:blur(12px);
+    padding:1.2rem 4rem; background:rgba(254,244,236,.92); backdrop-filter:blur(12px);
     border-bottom:1.5px solid var(--coral-light); transition:box-shadow .3s;
   }
-  nav.site-nav.scrolled { box-shadow:0 4px 30px rgba(243,128,103,.18); }
+  nav.site-nav.scrolled { box-shadow:0 4px 30px rgba(255,140,90,.18); }
   .nav-logo { display:flex; align-items:center; text-decoration:none; }
   .nav-logo img { height:42px; width:auto; display:block; }
   .nav-logo span.fallback { font-family:'Playfair Display',serif; font-weight:900; font-size:1.4rem; color:var(--black); }
@@ -47,7 +47,7 @@
 
   .lang-switcher {
     display:flex; align-items:center; gap:.3rem;
-    background:rgba(243,128,103,.1); border:1.5px solid var(--coral-light);
+    background:rgba(255,140,90,.1); border:1.5px solid var(--coral-light);
     border-radius:3px; padding:.2rem .3rem;
   }
   .lang-btn {
