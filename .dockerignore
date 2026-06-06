@@ -1,0 +1,52 @@
+# VCS / editor
+.git
+.gitignore
+.gitattributes
+.editorconfig
+.idea
+.vscode
+.zed
+.nova
+.cursor
+.codex
+
+# Env / secrets — pasalas por variables en Dokploy
+.env
+.env.*
+!.env.example
+auth.json
+
+# Dependencias (se reinstalan dentro de la imagen)
+vendor
+node_modules
+
+# Build artefacts
+public/build
+public/hot
+public/storage
+
+# Runtime / cache (se generan en el entrypoint)
+storage/app/public/*
+!storage/app/public/.gitkeep
+storage/framework/cache/data/*
+storage/framework/sessions/*
+storage/framework/views/*
+storage/framework/testing/*
+storage/logs/*
+bootstrap/cache/*.php
+
+# Tests + dev tooling
+tests
+phpunit.xml
+.phpunit.cache
+.phpunit.result.cache
+.phpactor.json
+
+# Documentación + sobrantes
+README.md
+_legacy
+
+# Logs y temporales del host
+*.log
+.DS_Store
+Thumbs.db
