@@ -1,5 +1,4 @@
 #!/bin/bash
-
 set -e
 
 echo "Starting application setup..."
@@ -18,21 +17,20 @@ chmod -R 775 /var/www/html/storage /var/www/html/bootstrap/cache
 # Create storage symlink
 php artisan storage:link 2>/dev/null || true
 
-# Generate key if not set
-php artisan key:generate --force 2>/dev/null || true
+# APP_KEY debe venir como variable de entorno en Dokploy, NO se genera aquí
+if [ -z "$APP_KEY" ]; then
+    echo "ERROR: APP_KEY is not set. Set it in Dokploy environment variables."
+    exit 1
+fi
 
-# Run migrations in production (optional - comment out if not needed)
-php artisan migrate fresh --seed || echo "Migration failed, continuing..."
+# Solo migraciones nuevas, nunca fresh
+php artisan migrate --force || echo "Migration failed, continuing..."
 
-# Clear and rebuild caches
+# Rebuild caches
 php artisan optimize:clear
 php artisan config:cache
 php artisan route:cache
 php artisan view:cache
 
 echo "Application setup complete. Starting Apache..."
-
 exec apache2-foreground
-
-
-
