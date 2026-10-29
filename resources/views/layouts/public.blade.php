@@ -8,8 +8,8 @@
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
   :root {
-    --coral: #FF8C5A; --cream: #FEF4EC; --black: #000;
-    --coral-dark: #E66B3A; --coral-light: #FFB89A; --coral-pale: #FFF0E8;
+    --red: #E4261C; --cream: #FBF6EA; --black: #1A1A1A; --blue: #1D6FD8;
+    --red-dark: #B81D14; --yellow: #FFC629; --yellow-pale: #FFF4CC;
   }
   * { margin:0; padding:0; box-sizing:border-box; }
   html { scroll-behavior:smooth; }
@@ -20,13 +20,13 @@
   nav.site-nav {
     position:fixed; top:0; left:0; right:0; z-index:100;
     display:flex; align-items:center; justify-content:space-between;
-    padding:1.2rem 4rem; background:rgba(254,244,236,.92); backdrop-filter:blur(12px);
-    border-bottom:1.5px solid var(--coral-light); transition:box-shadow .3s;
+    padding:1.2rem 4rem; background:rgba(251,246,234,.92); backdrop-filter:blur(12px);
+    border-bottom:1.5px solid var(--yellow); transition:box-shadow .3s;
   }
-  nav.site-nav.scrolled { box-shadow:0 4px 30px rgba(255,140,90,.18); }
+  nav.site-nav.scrolled { box-shadow:0 4px 30px rgba(228,38,28,.18); }
   .nav-logo { display:flex; align-items:center; text-decoration:none; }
   .nav-logo img { height:42px; width:auto; display:block; }
-  .nav-logo span.fallback { font-family:'Playfair Display',serif; font-weight:900; font-size:1.4rem; color:var(--black); }
+  .nav-logo span.fallback { font-family:'Playfair Display',serif; font-weight:900; font-size:1.4rem; color:var(--red); text-shadow:2px 2px 0 var(--yellow); }
   .nav-links { display:flex; gap:2rem; list-style:none; align-items:center; }
   .nav-links a {
     text-decoration:none; color:var(--black); font-size:.9rem; font-weight:500;
@@ -34,20 +34,20 @@
   }
   .nav-links a::after {
     content:''; position:absolute; left:0; bottom:-3px; width:0; height:2px;
-    background:var(--coral); transition:width .25s;
+    background:var(--red); transition:width .25s;
   }
-  .nav-links a:hover { color:var(--coral); }
+  .nav-links a:hover { color:var(--red); }
   .nav-links a:hover::after { width:100%; }
   .nav-reserve {
-    background:var(--coral); color:#fff !important; padding:.55rem 1.4rem;
+    background:var(--red); color:#fff !important; padding:.55rem 1.4rem;
     border-radius:2px; transition:background .2s !important;
   }
-  .nav-reserve:hover { background:var(--coral-dark) !important; }
+  .nav-reserve:hover { background:var(--red-dark) !important; }
   .nav-reserve::after { display:none !important; }
 
   .lang-switcher {
     display:flex; align-items:center; gap:.3rem;
-    background:rgba(255,140,90,.1); border:1.5px solid var(--coral-light);
+    background:rgba(228,38,28,.1); border:1.5px solid var(--yellow);
     border-radius:3px; padding:.2rem .3rem;
   }
   .lang-btn {
@@ -56,22 +56,22 @@
     color:#888; padding:.28rem .48rem; border-radius:2px;
     text-transform:uppercase; letter-spacing:.06em; transition:background .15s,color .15s; line-height:1; text-decoration:none;
   }
-  .lang-btn:hover { color:var(--coral); }
-  .lang-btn.active { background:var(--coral); color:#fff; }
-  .lang-sep { color:var(--coral-light); font-size:.7rem; user-select:none; }
+  .lang-btn:hover { color:var(--red); }
+  .lang-btn.active { background:var(--red); color:#fff; }
+  .lang-sep { color:var(--yellow); font-size:.7rem; user-select:none; }
 
   section.block { padding:6rem 4rem; }
-  .section-label { font-size:.72rem; text-transform:uppercase; letter-spacing:.2em; color:var(--coral); font-weight:500; margin-bottom:.8rem; }
+  .section-label { font-size:.72rem; text-transform:uppercase; letter-spacing:.2em; color:var(--red); font-weight:500; margin-bottom:.8rem; }
   .section-title { font-family:'Playfair Display',serif; font-size:clamp(2rem,4vw,3.2rem); font-weight:900; line-height:1.1; margin-bottom:1rem; }
-  .divider { width:60px; height:3px; background:var(--coral); margin:1.2rem 0 2rem; }
+  .divider { width:60px; height:3px; background:var(--red); margin:1.2rem 0 2rem; }
   .divider.center { margin:1.2rem auto 2rem; }
   .btn-primary {
-    background:var(--coral); color:#fff; padding:.85rem 2rem; border:none; cursor:pointer;
+    background:var(--red); color:#fff; padding:.85rem 2rem; border:none; cursor:pointer;
     font-family:'DM Sans',sans-serif; font-size:.9rem; font-weight:500;
     text-transform:uppercase; letter-spacing:.08em; text-decoration:none; display:inline-block;
     border-radius:2px; transition:background .2s,transform .15s;
   }
-  .btn-primary:hover { background:var(--coral-dark); transform:translateY(-2px); }
+  .btn-primary:hover { background:var(--red-dark); transform:translateY(-2px); }
   .btn-outline {
     background:transparent; color:var(--black); padding:.85rem 2rem;
     border:1.5px solid var(--black); cursor:pointer; font-family:'DM Sans',sans-serif;
@@ -81,7 +81,7 @@
   }
   .btn-outline:hover { background:var(--black); color:var(--cream); transform:translateY(-2px); }
   footer.site-footer { background:var(--black); color:#555; text-align:center; padding:2.5rem 4rem; font-size:.8rem; font-weight:300; }
-  footer.site-footer a { color:var(--coral); text-decoration:none; }
+  footer.site-footer a { color:var(--red); text-decoration:none; }
   footer.site-footer strong { color:var(--cream); }
 
   @media (max-width: 900px) {
@@ -110,7 +110,7 @@
     @if($brandLogo)
       <img src="{{ $brandLogo }}" alt="{{ $brandName }}">
     @else
-      <span class="fallback">{{ $brandName ?: 'RG2 Eat' }}</span>
+      <span class="fallback">{{ $brandName ?: 'La Chilanguinha' }}</span>
     @endif
   </a>
   <ul class="nav-links">

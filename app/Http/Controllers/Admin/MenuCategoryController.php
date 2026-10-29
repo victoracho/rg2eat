@@ -18,7 +18,7 @@ class MenuCategoryController extends Controller
 
     public function create()
     {
-        return view('admin.categories.edit', ['category' => new MenuCategory()]);
+        return view('admin.categories.edit', ['category' => new MenuCategory(), 'parents' => $this->parents(null)]);
     }
 
     public function store(Request $request)
@@ -31,7 +31,7 @@ class MenuCategoryController extends Controller
 
     public function edit(MenuCategory $category)
     {
-        return view('admin.categories.edit', ['category' => $category]);
+        return view('admin.categories.edit', ['category' => $category, 'parents' => $this->parents($category->id)]);
     }
 
     public function update(Request $request, MenuCategory $category)
@@ -50,10 +50,20 @@ class MenuCategoryController extends Controller
             ->with('ok', "Categoría «{$name}» eliminada.");
     }
 
+    private function parents(?int $exceptId)
+    {
+        return MenuCategory::whereNull('parent_id')->where('id', '!=', $exceptId ?? 0)->orderBy('sort_order')->get();
+    }
+
     private function validated(Request $request, ?int $ignoreId): array
     {
         $data = $request->validate([
             'slug'           => ['nullable', 'string', 'max:80', Rule::unique('menu_categories', 'slug')->ignore($ignoreId)],
+            'parent_id'      => ['nullable', 'exists:menu_categories,id', Rule::notIn([$ignoreId])],
+            'section'        => ['required', Rule::in(array_keys(MenuCategory::SECTIONS))],
+            'style'          => ['required', Rule::in(array_keys(MenuCategory::STYLES))],
+            'price_label'    => ['nullable', 'string', 'max:20'],
+            'price_2_label'  => ['nullable', 'string', 'max:20'],
             'icon'           => ['nullable', 'string', 'max:16'],
             'name_es'        => ['required', 'string', 'max:120'],
             'name_en'        => ['nullable', 'string', 'max:120'],

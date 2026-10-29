@@ -14,8 +14,9 @@ class PublicSiteController extends Controller
     {
         $lang = Site::lang();
         $categories = MenuCategory::where('is_active', true)
+            ->whereNull('parent_id')
             ->orderBy('sort_order')
-            ->with(['activeItems'])
+            ->with(['activeItems', 'activeChildren.activeItems'])
             ->get();
         $hoursByDay = BusinessHour::groupedByDay();
 
@@ -32,8 +33,9 @@ class PublicSiteController extends Controller
     {
         $lang = Site::lang();
         $categories = MenuCategory::where('is_active', true)
+            ->whereNull('parent_id')
             ->orderBy('sort_order')
-            ->with(['activeItems'])
+            ->with(['activeItems', 'activeChildren.activeItems'])
             ->get();
 
         return view('public.menu', [

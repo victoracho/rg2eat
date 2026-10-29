@@ -33,6 +33,49 @@
     </div>
   </div>
 
+  <div class="field">
+    <label>Dentro del grupo</label>
+    <select name="parent_id">
+      <option value="">— Ninguno (grupo principal) —</option>
+      @foreach($parents as $p)
+        <option value="{{ $p->id }}" @selected(old('parent_id', $category->parent_id) == $p->id)>{{ $p->name_es }}</option>
+      @endforeach
+    </select>
+    <p class="hint">Se pinta dentro del recuadro de ese grupo (ej. Rellenos dentro de Los Chilangos).</p>
+  </div>
+
+  <div class="grid-2">
+    <div class="field">
+      <label>Sección</label>
+      <select name="section">
+        @foreach(\App\Models\MenuCategory::SECTIONS as $k => $label)
+          <option value="{{ $k }}" @selected(old('section', $category->section ?? 'food') === $k)>{{ $label }}</option>
+        @endforeach
+      </select>
+    </div>
+    <div class="field">
+      <label>Estilo del grupo</label>
+      <select name="style">
+        @foreach(\App\Models\MenuCategory::STYLES as $k => $label)
+          <option value="{{ $k }}" @selected(old('style', $category->style ?? 'tab-blue') === $k)>{{ $label }}</option>
+        @endforeach
+      </select>
+    </div>
+  </div>
+
+  <div class="grid-2">
+    <div class="field">
+      <label>Etiqueta precio 1</label>
+      <input type="text" name="price_label" maxlength="20" value="{{ old('price_label', $category->price_label) }}">
+      <p class="hint">Solo si el grupo tiene dos precios. Ej: <code>25 ml</code></p>
+    </div>
+    <div class="field">
+      <label>Etiqueta precio 2</label>
+      <input type="text" name="price_2_label" maxlength="20" value="{{ old('price_2_label', $category->price_2_label) }}">
+      <p class="hint">Ej: <code>50 ml</code></p>
+    </div>
+  </div>
+
   <div data-lang-tabs>
     <div class="lang-tabs">
       <button type="button" class="lang-tab active" data-lang="es">ES</button>

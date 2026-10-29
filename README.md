@@ -1,6 +1,6 @@
-# RG2 Eat — CMS (Laravel)
+# La Chilanguinha — CMS (Laravel)
 
-Landing + mini-CMS para el restaurante mexicano **RG2 Eat** (Porto). Todo el contenido de la landing se administra desde un panel privado: textos (ES/EN/PT), redes, mapa, horarios y menú con CRUD. El menú es accesible por QR en tiempo real.
+Landing + mini-CMS para el restaurante mexicano **La Chilanguinha** (Porto). Todo el contenido de la landing se administra desde un panel privado: textos (ES/EN/PT), redes, mapa, horarios y menú con CRUD. El menú es accesible por QR en tiempo real.
 
 ## Stack
 

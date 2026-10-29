@@ -3,13 +3,13 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Login · RG2 Eat CMS</title>
+<title>Login · La Chilanguinha CMS</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@900&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
 <style>
-  :root { --coral:#FF8C5A; --cream:#FEF4EC; --coral-dark:#E66B3A; --coral-light:#FFB89A; --coral-pale:#FFF0E8; }
+  :root { --red:#E4261C; --cream:#FBF6EA; --red-dark:#B81D14; --yellow:#FFC629; --yellow-pale:#FFF4CC; --blue:#1D6FD8; }
   * { margin:0; padding:0; box-sizing:border-box; }
   body { font-family:'DM Sans',sans-serif; background:var(--cream); min-height:100vh; display:flex; align-items:center; justify-content:center; padding:1.5rem; }
-  .card { background:#fff; border:1.5px solid var(--coral-light); border-radius:8px; padding:2.5rem; width:100%; max-width:380px; box-shadow:0 18px 50px rgba(255,140,90,.18); }
+  .card { background:#fff; border:1.5px solid var(--yellow); border-radius:8px; padding:2.5rem; width:100%; max-width:380px; box-shadow:0 18px 50px rgba(228,38,28,.18); }
   .card h1 { font-family:'Playfair Display',serif; font-size:1.8rem; margin-bottom:.4rem; }
   .card .sub { color:#666; font-size:.9rem; margin-bottom:2rem; }
   label { display:block; font-size:.72rem; text-transform:uppercase; letter-spacing:.1em; font-weight:500; color:#333; margin-bottom:.4rem; }
@@ -17,24 +17,24 @@
     width:100%; padding:.7rem .9rem; border:1.5px solid #ddd; border-radius:3px; font-size:.95rem;
     font-family:inherit; margin-bottom:1.1rem; transition:border-color .15s;
   }
-  input:focus { outline:none; border-color:var(--coral); }
+  input:focus { outline:none; border-color:var(--red); }
   button {
-    width:100%; padding:.85rem; background:var(--coral); color:#fff; border:none; cursor:pointer;
+    width:100%; padding:.85rem; background:var(--red); color:#fff; border:none; cursor:pointer;
     text-transform:uppercase; letter-spacing:.1em; font-size:.85rem; font-weight:500; border-radius:3px;
     transition:background .2s;
   }
-  button:hover { background:var(--coral-dark); }
+  button:hover { background:var(--red-dark); }
   .err { background:#fde8e3; color:#7a1f1f; padding:.6rem .8rem; border-radius:3px; font-size:.82rem; margin-bottom:1rem; }
   .check { display:flex; align-items:center; gap:.5rem; margin-bottom:1.2rem; font-size:.85rem; color:#444; }
   .back { display:block; text-align:center; margin-top:1.4rem; font-size:.82rem; color:#888; text-decoration:none; }
-  .back:hover { color:var(--coral); }
+  .back:hover { color:var(--red); }
 </style>
 </head>
 <body>
 <form class="card" method="POST" action="{{ route('login.attempt') }}">
   @csrf
   <h1>Hola de nuevo 👋</h1>
-  <p class="sub">Entra al panel del CMS de RG2 Eat.</p>
+  <p class="sub">Entra al panel del CMS de La Chilanguinha.</p>
 
   @if($errors->any())
     <div class="err">{{ $errors->first() }}</div>

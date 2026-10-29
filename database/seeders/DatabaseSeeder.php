@@ -3,8 +3,6 @@
 namespace Database\Seeders;
 
 use App\Models\BusinessHour;
-use App\Models\MenuCategory;
-use App\Models\MenuItem;
 use App\Models\SiteSetting;
 use App\Models\User;
 use Illuminate\Database\Seeder;
@@ -17,7 +15,7 @@ class DatabaseSeeder extends Seeder
         $this->seedAdmin();
         $this->seedSettings();
         $this->seedHours();
-        $this->seedMenu();
+        $this->call(MenuSeeder::class);
     }
 
     private function seedAdmin(): void
@@ -25,7 +23,7 @@ class DatabaseSeeder extends Seeder
         User::updateOrCreate(
             ['email' => 'admin@rg2eat.com'],
             [
-                'name'     => 'Admin RG2',
+                'name'     => 'Admin Chilanguinha',
                 'password' => Hash::make('rg2admin'),
             ]
         );
@@ -36,13 +34,13 @@ class DatabaseSeeder extends Seeder
         $rows = [
             // SEO / Brand
             ['general', 'brand_name', 'Nombre de la marca', 'text',
-                'RG2 Eat', 'RG2 Eat', 'RG2 Eat'],
+                'La Chilanguinha', 'La Chilanguinha', 'La Chilanguinha'],
             ['general', 'brand_logo_url', 'URL del logo', 'url',
-                'https://www.rg2eat.com/assets/images/rg2-logo.svg', null, null],
+                null, null, null],
             ['general', 'page_title', 'Título del navegador', 'text',
-                'RG2 Eat — Comida Mexicana · Porto',
-                'RG2 Eat — Mexican Food · Porto',
-                'RG2 Eat — Comida Mexicana · Porto'],
+                'La Chilanguinha — Comida Mexicana · Porto',
+                'La Chilanguinha — Mexican Food · Porto',
+                'La Chilanguinha — Comida Mexicana · Porto'],
 
             // Hero
             ['hero', 'hero_tag', 'Etiqueta superior del hero', 'text',
@@ -52,9 +50,9 @@ class DatabaseSeeder extends Seeder
                 'Authentic<br><em>Mexican</em><br>flavour.',
                 'Sabor<br><em>autêntico</em><br>mexicano.'],
             ['hero', 'hero_sub', 'Subtítulo del hero', 'textarea',
-                'Bienvenidos a RG2 Eat, donde los sabores de México cobran vida en el corazón de Porto. Ingredientes frescos, recetas tradicionales y mucho sabor.',
-                'Welcome to RG2 Eat, where the flavours of Mexico come alive in the heart of Porto. Fresh ingredients, traditional recipes and plenty of taste.',
-                'Bem-vindos ao RG2 Eat, onde os sabores do México ganham vida no coração do Porto. Ingredientes frescos, receitas tradicionais e muito sabor.'],
+                'Bienvenidos a La Chilanguinha, donde los sabores de México cobran vida en el corazón de Porto. Ingredientes frescos, recetas tradicionales y mucho sabor.',
+                'Welcome to La Chilanguinha, where the flavours of Mexico come alive in the heart of Porto. Fresh ingredients, traditional recipes and plenty of taste.',
+                'Bem-vindos ao La Chilanguinha, onde os sabores do México ganham vida no coração do Porto. Ingredientes frescos, receitas tradicionais e muito sabor.'],
             ['hero', 'hero_cta1', 'Botón CTA 1', 'text', 'Ver menú', 'View menu', 'Ver menu'],
             ['hero', 'hero_cta2', 'Botón CTA 2', 'text', 'Encuéntranos', 'Find us', 'Encontra-nos'],
             ['hero', 'hero_badge_line1', 'Badge línea 1 (cuando está abierto)', 'text', 'Abierto', 'Open', 'Aberto'],
@@ -79,9 +77,9 @@ class DatabaseSeeder extends Seeder
                 'Tradition in<br>every bite',
                 'Tradição em<br>cada garfada'],
             ['about', 'about_p1', 'Párrafo 1 about', 'textarea',
-                'En RG2 Eat llevamos la esencia de la cocina mexicana a las calles de Porto. Cada plato es una celebración de los sabores auténticos — desde las especias vibrantes hasta los ingredientes más frescos seleccionados a diario.',
-                'At RG2 Eat we bring the essence of Mexican cuisine to the streets of Porto. Every dish is a celebration of authentic flavours — from vibrant spices to the freshest ingredients selected daily.',
-                'No RG2 Eat trazemos a essência da cozinha mexicana para as ruas do Porto. Cada prato é uma celebração dos sabores autênticos — das especiarias vibrantes aos ingredientes mais frescos selecionados diariamente.'],
+                'En La Chilanguinha llevamos la esencia de la cocina mexicana a las calles de Porto. Cada plato es una celebración de los sabores auténticos — desde las especias vibrantes hasta los ingredientes más frescos seleccionados a diario.',
+                'At La Chilanguinha we bring the essence of Mexican cuisine to the streets of Porto. Every dish is a celebration of authentic flavours — from vibrant spices to the freshest ingredients selected daily.',
+                'No La Chilanguinha trazemos a essência da cozinha mexicana para as ruas do Porto. Cada prato é uma celebração dos sabores autênticos — das especiarias vibrantes aos ingredientes mais frescos selecionados diariamente.'],
             ['about', 'about_p2', 'Párrafo 2 about', 'textarea',
                 'Somos un local acogedor donde la comida, la música y la hospitalidad se unen para crear una experiencia única e inolvidable.',
                 'We are a welcoming spot where food, music and hospitality come together to create a unique and unforgettable experience.',
@@ -122,7 +120,7 @@ class DatabaseSeeder extends Seeder
 
             // Footer
             ['footer', 'footer_tagline', 'Footer tagline', 'text', 'Comida Mexicana Auténtica', 'Authentic Mexican Food', 'Comida Mexicana Autêntica'],
-            ['footer', 'footer_copy',    'Footer copyright', 'text', '© 2026 RG2 Eat. Todos los derechos reservados.', '© 2026 RG2 Eat. All rights reserved.', '© 2026 RG2 Eat. Todos os direitos reservados.'],
+            ['footer', 'footer_copy',    'Footer copyright', 'text', '© 2026 La Chilanguinha. Todos los derechos reservados.', '© 2026 La Chilanguinha. All rights reserved.', '© 2026 La Chilanguinha. Todos os direitos reservados.'],
             ['footer', 'footer_map',     'Texto link al mapa', 'text', 'Mapa', 'Map', 'Mapa'],
 
             // Nav
@@ -176,115 +174,6 @@ class DatabaseSeeder extends Seeder
                     'sort_order'  => $i,
                 ]);
             }
-        }
-    }
-
-    private function seedMenu(): void
-    {
-        $lunch = MenuCategory::updateOrCreate(
-            ['slug' => 'lunch'],
-            [
-                'icon'           => '☀️',
-                'name_es'        => 'Almuerzo',
-                'name_en'        => 'Lunch',
-                'name_pt'        => 'Almoço',
-                'description_es' => 'Del mediodía a la tarde — platos ligeros y sabrosos para recargar energías.',
-                'description_en' => 'From midday to afternoon — light and flavourful dishes to recharge your energy.',
-                'description_pt' => 'Do meio-dia à tarde — pratos leves e saborosos para recuperar energias.',
-                'is_active'      => true,
-                'sort_order'     => 0,
-            ]
-        );
-
-        $dinner = MenuCategory::updateOrCreate(
-            ['slug' => 'dinner'],
-            [
-                'icon'           => '🌙',
-                'name_es'        => 'Cena',
-                'name_en'        => 'Dinner',
-                'name_pt'        => 'Jantar',
-                'description_es' => 'La cena perfecta — platos especiales y cócteles para terminar el día con estilo.',
-                'description_en' => 'The perfect dinner — special plates and cocktails to end the day in style.',
-                'description_pt' => 'O jantar perfeito — pratos especiais e cocktails para terminar o dia com estilo.',
-                'is_active'      => true,
-                'sort_order'     => 1,
-            ]
-        );
-
-        $lunchItems = [
-            ['Tacos al Pastor',  'Pastor Tacos',       'Tacos al Pastor',
-             'Tres tacos con cerdo marinado, piña, cilantro y cebolla.',
-             'Three tacos with marinated pork, pineapple, cilantro and onion.',
-             'Três tacos com carne de porco marinada, ananás, coentros e cebola.',
-             9.50, ['spicy']],
-            ['Quesadilla de Pollo', 'Chicken Quesadilla', 'Quesadilla de Frango',
-             'Tortilla de harina con pollo, queso fundido y guacamole.',
-             'Flour tortilla with chicken, melted cheese and guacamole.',
-             'Tortilha de farinha com frango, queijo derretido e guacamole.',
-             8.90, []],
-            ['Burrito Vegetal',  'Veggie Burrito',     'Burrito Vegetariano',
-             'Arroz, frijoles negros, pimientos asados, aguacate y pico de gallo.',
-             'Rice, black beans, roasted peppers, avocado and pico de gallo.',
-             'Arroz, feijão preto, pimentos assados, abacate e pico de gallo.',
-             8.50, ['vegan']],
-            ['Nachos Supremos',  'Loaded Nachos',      'Nachos Supremos',
-             'Totopos con queso, jalapeños, crema, frijoles y guacamole.',
-             'Tortilla chips with cheese, jalapeños, sour cream, beans and guacamole.',
-             'Totopos com queijo, jalapeños, natas, feijão e guacamole.',
-             7.50, ['vegetarian']],
-        ];
-
-        $dinnerItems = [
-            ['Enchiladas Verdes', 'Green Enchiladas', 'Enchiladas Verdes',
-             'Tortillas rellenas de pollo bañadas en salsa verde y queso gratinado.',
-             'Chicken-stuffed tortillas in green salsa with gratinated cheese.',
-             'Tortilhas recheadas com frango em molho verde com queijo gratinado.',
-             12.50, []],
-            ['Carnitas Plate',  'Carnitas Plate',  'Prato de Carnitas',
-             'Cerdo confitado, frijoles charros, arroz, tortillas y salsas.',
-             'Slow-cooked pork with charro beans, rice, tortillas and salsas.',
-             'Porco confitado com feijão charro, arroz, tortilhas e molhos.',
-             14.50, []],
-            ['Mole Poblano',    'Mole Poblano',    'Mole Poblano',
-             'Pollo en mole tradicional con arroz rojo y tortillas.',
-             'Chicken in traditional mole with red rice and tortillas.',
-             'Frango em mole tradicional com arroz vermelho e tortilhas.',
-             13.50, ['signature']],
-            ['Margarita Clásica', 'Classic Margarita', 'Margarita Clássica',
-             'Tequila blanco, triple sec y lima fresca con sal escarchada.',
-             'Blanco tequila, triple sec and fresh lime with salted rim.',
-             'Tequila branca, triple sec e lima fresca com sal no copo.',
-             7.50, ['cocktail']],
-            ['Pastel Tres Leches', 'Tres Leches Cake', 'Bolo Três Leites',
-             'Bizcocho empapado en tres leches y crema de canela.',
-             'Sponge cake soaked in three milks with cinnamon cream.',
-             'Pão de ló embebido em três leites com creme de canela.',
-             5.50, ['dessert']],
-        ];
-
-        $this->fillItems($lunch->id, $lunchItems);
-        $this->fillItems($dinner->id, $dinnerItems);
-    }
-
-    private function fillItems(int $categoryId, array $items): void
-    {
-        foreach ($items as $i => [$nEs, $nEn, $nPt, $dEs, $dEn, $dPt, $price, $tags]) {
-            MenuItem::updateOrCreate(
-                ['menu_category_id' => $categoryId, 'name_es' => $nEs],
-                [
-                    'name_en'        => $nEn,
-                    'name_pt'        => $nPt,
-                    'description_es' => $dEs,
-                    'description_en' => $dEn,
-                    'description_pt' => $dPt,
-                    'price'          => $price,
-                    'currency'       => 'EUR',
-                    'is_active'      => true,
-                    'is_featured'    => in_array('signature', $tags, true),
-                    'tags'           => $tags,
-                    'sort_order'     => $i,
-                ]
-            );
         }
     }
 }

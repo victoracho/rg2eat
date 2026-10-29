@@ -16,9 +16,9 @@
   @csrf
   @if($item->exists) @method('PUT') @endif
 
-  <div class="grid-3">
+  <div class="grid-2">
     <div class="field">
-      <label>Categoría <span style="color:#c33;">*</span></label>
+      <label>Grupo <span style="color:#c33;">*</span></label>
       <select name="menu_category_id" required>
         @foreach($categories as $c)
           <option value="{{ $c->id }}" @selected(old('menu_category_id', $item->menu_category_id) == $c->id)>{{ $c->icon }} {{ $c->name_es }}</option>
@@ -26,8 +26,14 @@
       </select>
     </div>
     <div class="field">
-      <label>Precio <span style="color:#c33;">*</span></label>
-      <input type="number" name="price" step="0.01" min="0" value="{{ old('price', $item->price ?? 0) }}" required>
+      <label>Precio</label>
+      <input type="number" name="price" step="0.01" min="0" value="{{ old('price', $item->price) }}">
+      <p class="hint">Vacío = sin precio (ej. rellenos).</p>
+    </div>
+    <div class="field">
+      <label>Precio 2</label>
+      <input type="number" name="price_2" step="0.01" min="0" value="{{ old('price_2', $item->price_2) }}">
+      <p class="hint">Solo en grupos con dos tamaños (50 ml, 450 ml…).</p>
     </div>
     <div class="field">
       <label>Moneda</label>

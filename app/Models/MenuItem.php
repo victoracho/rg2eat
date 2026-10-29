@@ -12,7 +12,7 @@ class MenuItem extends Model
         'menu_category_id',
         'name_es', 'name_en', 'name_pt',
         'description_es', 'description_en', 'description_pt',
-        'price', 'currency', 'image_path',
+        'price', 'price_2', 'currency', 'image_path',
         'is_active', 'is_featured', 'tags', 'sort_order',
     ];
 
@@ -20,6 +20,7 @@ class MenuItem extends Model
         'is_active'   => 'boolean',
         'is_featured' => 'boolean',
         'price'       => 'decimal:2',
+        'price_2'     => 'decimal:2',
         'tags'        => 'array',
     ];
 
@@ -49,14 +50,20 @@ class MenuItem extends Model
         return Storage::disk('public')->url($this->image_path);
     }
 
-    public function formattedPrice(): string
+    public function formattedPrice(?string $value = null): string
     {
+        $value = func_num_args() ? $value : $this->price;
+        if ($value === null) {
+            return '';
+        }
         $sym = match (strtoupper($this->currency)) {
             'EUR' => '€',
             'USD' => '$',
             'GBP' => '£',
             default => $this->currency . ' ',
         };
-        return $sym . number_format((float) $this->price, 2, ',', '.');
+        // €4 en vez de €4,00, como en la carta impresa
+        $num = fmod((float) $value, 1.0) == 0.0 ? number_format((float) $value, 0) : number_format((float) $value, 2, ',', '.');
+        return $sym . $num;
     }
 }
